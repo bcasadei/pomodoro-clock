@@ -1,0 +1,136 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto:300,400');
+@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
+
+body {
+  font-family: 'Roboto', sans-serif;
+  background-color: #222222;
+  padding: 10px;
+}
+
+.container {
+  background-color: #4A4A4A;
+  border: 3px solid #D0011B;
+  border-radius: 8px;
+  max-width: 360px;
+  margin: 0 auto;
+  box-shadow: 0 3px 3px 0 rgba( 0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.header {
+  font-weight: 400;
+  font-size: 48px;
+  color: #FFF;
+  text-shadow: 0 3px 3px #2D2D2E;
+  margin: 20px 0;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.timer-value {
+  font-weight: 300;
+  font-size: 24px;
+  color: #FFF;
+}
+
+.time-adjuster {
+  flex-grow: 1;
+}
+
+.timer-name {
+  font-weight: 300;
+  font-size: 14px;
+  color: #FFF;
+  margin-bottom: 20px;
+}
+
+.timer-container {
+  width: 238px;
+  height: 238px;
+  background-color: #FFF;
+  border: 3px solid #D0011B;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  box-shadow: 0 3px 3px 0 rgba( 0, 0, 0, 0.3);
+}
+
+.timer-active {
+  width: 228px;
+  height: 228px;
+  background-color: #D0011B;
+  border-radius: 50%;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  background-image: 
+  /*linear-gradient(260deg, transparent 50%, #7ED321 50%),*/
+  linear-gradient(90deg, #7ED321 0%, transparent 100%);
+}
+
+.timer-circle {
+  width: 208px;
+  height: 208px;
+  background-color: #FFF;
+  border-radius: 100%;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.timer-text {
+  font-size: 54px;
+  font-weight: 300;
+  color: #4A4A4A;
+  margin: 30px 0 15px 0;
+}
+
+.rounds {
+  font-size: 20px;
+  font-weight: 300;
+  color: #FFF;
+  text-align: center;
+  margin: 20px 0;
+}
+
+.reset-button {
+  background-color: #D0011B;
+  color: #FFF;
+  border: 0;
+  border-radius: 4px;
+  font-size: 14px;
+  width: auto;
+  padding: 5px 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 3px 3px 0 rgba( 0, 0, 0, 0.3);
+}
+
+/* Material icon styles */
+
+.material-icons.md-light { 
+  color: rgba(256, 256, 256, 0.5);
+}
+
+.material-icons.md-36 { 
+  font-size: 36px;
+  line-height: 24px;
+}
+
+.material-icons.md-80 {
+  font-size: 80px;
+}
+
+.material-icons.md-red { 
+  color: rgba(208, 2, 27, 1);
+  cursor: pointer;
+}
+
+.material-icons.md-green { 
+  color: rgba(126, 211, 33, 1);
+  cursor: pointer;
+}

@@ -1,31 +1,14 @@
 import React, { Component } from 'react';
 
-class Timer extends Component {
-  state = {
-    timerProgress: `${this.props.roundLength}:00`,
-    paused: true
-  }
-
   updateTimer(value) {
     this.setState({
       timerProgress: value
     });
   }
 
-  renderButton() {
-    if(this.state.paused) {
-      return (
-        <i className="material-icons md-80 md-green"
-        onClick={this.startTimer.bind(this)}>
-        play_circle_outline</i>
-      );
-    }
-
-    return (
-      <i className="material-icons md-80 md-red"
-      onClick={this.startTimer.bind(this)}>
-      pause_circle_outline</i>
-    );
+  pauseTimer(value) {
+    this.setState({ paused: {value} });
+    console.log(this.state.paused);
   }
 
   startTimer(duration) {
@@ -34,7 +17,7 @@ class Timer extends Component {
         minutes,
         seconds;
 
-    this.setState({ paused: false });
+    this.pauseTimer(false);
 
     const timer = () => {
       // The 25 represents the duration argument
@@ -52,19 +35,40 @@ class Timer extends Component {
    
     timer();
     setInterval(timer, 1000);
+
+    // if(this.state.paused) {
+    //     return;
+    // }
   }
 
+  renderButton() {
+    if(this.state.paused) {
+      return (
+        <i className="material-icons md-80 md-green"
+        onClick={this.startTimer()}>
+        play_circle_outline</i>
+      );
+    }
+
+    return (
+      <i className="material-icons md-80 md-red"
+      onClick={this.pauseTimer(true)}>
+      pause_circle_outline</i>
+    );
+  }
+
+class Timer extends Component {
   render() {
     return(
-    <div className="timer-container">
-      <div className="timer-active">
-        <div className="timer-circle">
-          <div className="timer-text">{this.state.timerProgress}</div>
-          {this.renderButton()}
-        </div>
-      </div> 
-    </div>
-  );
+      <div className="timer-container">
+        <div className="timer-active">
+          <div className="timer-circle">
+            <div className="timer-text">{timerProgress}</div>
+            {renderButton()}
+          </div>
+        </div> 
+      </div>
+    );
   }
 }
 

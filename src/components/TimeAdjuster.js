@@ -1,12 +1,19 @@
 import React from 'react';
 
-const TimeAdjuster = ({ initialValue, timerName }) => {
+const TimeAdjuster = ({ value, timerName, increaseTimer, decreaseTimer }) => {
   return (
     <div className="time-adjuster">
       <div className="row">
-        <i className="material-icons md-light md-36">arrow_left</i>
-        <div className="timer-value">{initialValue}</div>
-        <i className="material-icons md-light md-36">arrow_right</i>
+        <i className="material-icons md-light md-36"
+          onClick={() => decreaseTimer()}>arrow_left
+        </i>
+
+        <div className="timer-value">{value}</div>
+        
+        <i className="material-icons md-light md-36"
+          onClick={() => increaseTimer()}>
+          arrow_right
+        </i>
       </div>
 
       <div className="row timer-name">

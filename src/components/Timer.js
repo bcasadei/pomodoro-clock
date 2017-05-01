@@ -4,46 +4,19 @@ class Timer extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      timerProgress: '25:00',
-      timerMinutes: 25,
+      timerMinutes: props.roundLength,
       timerSeconds: 0,
-      paused: true
+      paused: true,
+      currentTimer: 'round'
     };
   }
-  
-  // componentDidUpdate() {
-  //   this.timerID = setInterval(
-  //     () => this.updateTimer(),
-  //     1000
-  //   );
-  // }
 
-  // componentWillUnmount() {
-  //   clearInterval(this.timerID);
-  // }
+  // Keep track of which timer we're currently on, Round, 
+  // Short Break or Long Break.
+  // Round - starting timer
+  // Short Break - happens between rounds
+  // Long Break - replaces Round every 4th break
 
-  // updateTimer() {
-  //   const start = this.state.startTime;
-
-  //   let difference = (25 * 60) - ((Date.now() - start) / 1000 | 0);
-  //   let minutes = (difference / 60) | 0;
-  //   let seconds = (difference % 60) | 0;
-
-  //   seconds = seconds < 10 ? "0" + seconds : seconds;
-
-  //   console.log(`${minutes}:${seconds}`);
-
-  //   this.setState({
-  //     timerProgress: `${minutes}:${seconds}`
-  //   });
-  // }
-
-  // startTimer() {
-  //   this.setState({
-  //     startTime: Date.now(),
-  //     paused: false
-  //   });
-  // }
   pauseTimer() {
     this.setState({
       paused: true
@@ -91,7 +64,7 @@ class Timer extends Component {
   }
 
   render() {
-    const {timerMinutes, timerSeconds } = this.state;
+    const { timerMinutes, timerSeconds } = this.state;
 
     return (
       <div className="timer-container">

@@ -119,6 +119,7 @@ body {
 .material-icons.md-36 { 
   font-size: 36px;
   line-height: 24px;
+  cursor: pointer;
 }
 
 .material-icons.md-80 {

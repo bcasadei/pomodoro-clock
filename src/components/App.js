@@ -11,33 +11,57 @@ class App extends Component {
     super(props);
     this.state = {
       headerText: 'Focus Time',
-      roundLength: 25,
+      roundLength: 20,
       shortBreakLength: 5,
       longBreakLength: 25,
-      currentRound: 1
+      currentRound: 1,
+      currentTimer: 'round'
     };
+  }
+
+  increaseTimer(key, value) {
+    this.setState({
+      [key]: value + 1
+    });
+  }
+
+  decreaseTimer(key, value) {
+    this.setState({
+      [key]: value - 1
+    });
   }
   
 
   render() {
+    const { roundLength, shortBreakLength, longBreakLength } = this.state;
+
     return (
       <div className="container">
         <Header headerText={this.state.headerText}/>
 
         <div className="row">
           <TimeAdjuster 
-            initialValue={this.state.roundLength}
-            timerName="Round" />
+            value={roundLength}
+            timerName="Round" 
+            increaseTimer={() => this.increaseTimer("roundLength", roundLength)}
+            decreaseTimer={() => this.decreaseTimer("roundLength", roundLength)} />
           <TimeAdjuster 
-            initialValue={this.state.shortBreakLength}
-            timerName="Short Break" />
+            value={shortBreakLength}
+            timerName="Short Break"
+            increaseTimer={() => this.increaseTimer("shortBreakLength", shortBreakLength)}
+            decreaseTimer={() => this.decreaseTimer("shortBreakLength", shortBreakLength)}  />
           <TimeAdjuster
-            initialValue={this.state.longBreakLength}
-            timerName="Long Break" />
+            value={longBreakLength}
+            timerName="Long Break"
+            increaseTimer={() => this.increaseTimer("longBreakLength", longBreakLength)}
+            decreaseTimer={() => this.decreaseTimer("longBreakLength", longBreakLength)} />
         </div>
 
-        <Timer />
-        
+        <Timer
+          roundLength={roundLength}
+          shortBreakLength={shortBreakLength}
+          longBreakLength={longBreakLength} />
+
         <Rounds currentRound={this.state.currentRound}/>
 
         <ResetButton />

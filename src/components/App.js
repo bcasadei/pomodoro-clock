@@ -11,29 +11,44 @@ class App extends Component {
     super(props);
     this.state = {
       headerText: 'Focus Time',
-      roundLength: 20,
+      roundLength: 25,
       shortBreakLength: 5,
       longBreakLength: 25,
-      currentRound: 1,
-      currentTimer: 'round'
+      currentRound: 1
     };
   }
 
   increaseTimer(key, value) {
-    this.setState({
-      [key]: value + 1
-    });
+    if(value >= 1 && value <= 59) {
+      this.setState({ [key]: value + 1 });
+    }
+    return;
   }
 
   decreaseTimer(key, value) {
-    this.setState({
-      [key]: value - 1
-    });
+    if(value >= 2 && value <= 60) {
+      this.setState({ [key]: value - 1 });
+    }
+    return;
+  }
+
+  increaseCurrentRound() {
+    const { currentRound } = this.state;
+
+    if(currentRound === 4) {
+      this.setState({ currentRound: 1 });
+    }
+
+    this.setState({ currentRound: currentRound + 1 });
   }
   
-
   render() {
-    const { roundLength, shortBreakLength, longBreakLength } = this.state;
+    const { 
+      roundLength, 
+      shortBreakLength, 
+      longBreakLength, 
+      currentRound 
+    } = this.state;
 
     return (
       <div className="container">
@@ -60,9 +75,11 @@ class App extends Component {
         <Timer
           roundLength={roundLength}
           shortBreakLength={shortBreakLength}
-          longBreakLength={longBreakLength} />
+          longBreakLength={longBreakLength}
+          currentRound={currentRound}
+          increaseCurrentRound={() => this.increaseCurrentRound()} />
 
-        <Rounds currentRound={this.state.currentRound}/>
+        <Rounds currentRound={currentRound}/>
 
         <ResetButton />
       </div>

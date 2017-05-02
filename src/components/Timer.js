@@ -11,11 +11,12 @@ class Timer extends Component {
     };
   }
 
-  // Keep track of which timer we're currently on, Round, 
-  // Short Break or Long Break.
-  // Round - starting timer
-  // Short Break - happens between rounds
-  // Long Break - replaces Round every 4th break
+  componentWillReceiveProps(nextProps) {
+    this.setState({ 
+      timerMinutes: nextProps.roundLength,
+      timerSeconds: 0
+    });
+  }
 
   pauseTimer() {
     this.setState({
@@ -26,8 +27,8 @@ class Timer extends Component {
   }
 
   startTimer() {
-    let start = Date.now();
-    let { timerMinutes, timerSeconds } = this.state;
+    const start = Date.now();
+    const { timerMinutes, timerSeconds, currentTimer } = this.state;
 
     this.setState({ paused: false });
 
@@ -37,10 +38,41 @@ class Timer extends Component {
       let minutes = (difference / 60) | 0;
       let seconds = (difference % 60) | 0;
 
-      this.setState({
-        timerMinutes: minutes,
-        timerSeconds: seconds
-      });
+      if(this.state.timerMinutes > 0 || this.state.timerSeconds > 0) {
+        this.setState({
+          timerMinutes: minutes,
+          timerSeconds: seconds
+        });
+      }
+      else if(currentTimer === 'round' && 
+              this.props.currentRound === 4) {
+        this.setState({
+          timerMinutes: this.props.longBreakLength,
+          timerSeconds: 0,
+          currentTimer: 'longBreak'
+        });
+        clearInterval(this.timerID);
+        this.startTimer();
+      }
+      else if(currentTimer === 'round') {
+        this.setState({
+          timerMinutes: this.props.shortBreakLength,
+          timerSeconds: 0,
+          currentTimer: 'shortBreak'
+        });
+        clearInterval(this.timerID);
+        this.startTimer();
+      }
+      else {
+        this.setState({
+          timerMinutes: this.props.roundLength,
+          timerSeconds: 0,
+          currentTimer: 'round'
+        });
+        clearInterval(this.timerID);
+        this.props.increaseCurrentRound();
+        this.startTimer();
+      }
     };
    
     timer();
@@ -71,7 +103,7 @@ class Timer extends Component {
         <div className="timer-active">
           <div className="timer-circle">
             <div className="timer-text">
-              {`${timerMinutes}:${timerSeconds < 10 ? "0" + timerSeconds : timerSeconds}`}
+              {`${timerMinutes < 10 ? "0" + timerMinutes : timerMinutes}:${timerSeconds < 10 ? "0" + timerSeconds : timerSeconds}`}
             </div>
             {this.renderButton()}
           </div>

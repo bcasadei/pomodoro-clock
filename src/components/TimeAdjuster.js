@@ -1,6 +1,10 @@
 import React from 'react';
 
-const TimeAdjuster = ({ value, timerName, increaseTimer, decreaseTimer }) => {
+const TimeAdjuster = ({ 
+  value, 
+  timerName, 
+  increaseTimer, 
+  decreaseTimer }) => {
   return (
     <div className="time-adjuster">
       <div className="row">

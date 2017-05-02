@@ -110,6 +110,15 @@ body {
   box-shadow: 0 3px 3px 0 rgba( 0, 0, 0, 0.3);
 }
 
+/* Make icons unselectable when double clicked */
+
+i {
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+
 /* Material icon styles */
 
 .material-icons.md-light { 
@@ -128,10 +137,12 @@ body {
 
 .material-icons.md-red { 
   color: rgba(208, 2, 27, 1);
+  text-shadow: 0 2px 2px rgba( 0, 0, 0, 0.3);
   cursor: pointer;
 }
 
 .material-icons.md-green { 
   color: rgba(126, 211, 33, 1);
+  text-shadow: 0 2px 2px rgba( 0, 0, 0, 0.4);
   cursor: pointer;
 }

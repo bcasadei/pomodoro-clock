@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ResetButton from './ResetButton';
 
 class Timer extends Component {
   constructor(props) {
@@ -6,15 +7,44 @@ class Timer extends Component {
     this.state = {
       timerMinutes: props.roundLength,
       timerSeconds: 0,
+      timerDegrees: 0,
       paused: true,
       currentTimer: 'round'
     };
   }
 
   componentWillReceiveProps(nextProps) {
-    this.setState({ 
-      timerMinutes: nextProps.roundLength,
-      timerSeconds: 0
+    switch(this.state.currentTimer) {
+      case 'round':
+        this.setState({ 
+          timerMinutes: nextProps.roundLength,
+          timerSeconds: 0
+        });
+        break;
+      case 'shortBreak':
+        this.setState({ 
+          timerMinutes: nextProps.shortBreakLength,
+          timerSeconds: 0
+        });
+        break;
+      default:
+        this.setState({ 
+          timerMinutes: nextProps.longBreakLength,
+          timerSeconds: 0
+        });
+    }
+  }
+
+  resetTimer() {
+    this.pauseTimer();
+    this.props.reset();
+
+    this.setState({
+      timerMinutes: this.props.roundLength,
+      timerSeconds: 0,
+      timerDegrees: 0,
+      paused: true,
+      currentTimer: 'round'
     });
   }
 
@@ -33,15 +63,18 @@ class Timer extends Component {
     this.setState({ paused: false });
 
     const timer = () => {
-      let difference = ((timerMinutes * 60) + timerSeconds) - ((Date.now() - start) / 1000 | 0);
+      const { timerDegrees } = this.state
+      const difference = ((timerMinutes * 60) + timerSeconds) - ((Date.now() - start) / 1000 | 0);
 
-      let minutes = (difference / 60) | 0;
-      let seconds = (difference % 60) | 0;
+      const minutes = (difference / 60) | 0;
+      const seconds = (difference % 60) | 0;
+      const degrees = timerDegrees <= 360 ? timerDegrees + 15 : 0;
 
       if(this.state.timerMinutes > 0 || this.state.timerSeconds > 0) {
         this.setState({
           timerMinutes: minutes,
-          timerSeconds: seconds
+          timerSeconds: seconds,
+          timerDegrees: degrees
         });
       }
       else if(currentTimer === 'round' && 
@@ -52,6 +85,7 @@ class Timer extends Component {
           currentTimer: 'longBreak'
         });
         clearInterval(this.timerID);
+        this.props.toggleHeader();
         this.startTimer();
       }
       else if(currentTimer === 'round') {
@@ -61,6 +95,7 @@ class Timer extends Component {
           currentTimer: 'shortBreak'
         });
         clearInterval(this.timerID);
+        this.props.toggleHeader();
         this.startTimer();
       }
       else {
@@ -71,6 +106,7 @@ class Timer extends Component {
         });
         clearInterval(this.timerID);
         this.props.increaseCurrentRound();
+        this.props.toggleHeader();
         this.startTimer();
       }
     };
@@ -96,18 +132,21 @@ class Timer extends Component {
   }
 
   render() {
-    const { timerMinutes, timerSeconds } = this.state;
+    const { timerMinutes, timerSeconds, timerDegrees } = this.state;
 
     return (
-      <div className="timer-container">
-        <div className="timer-active">
-          <div className="timer-circle">
-            <div className="timer-text">
-              {`${timerMinutes < 10 ? "0" + timerMinutes : timerMinutes}:${timerSeconds < 10 ? "0" + timerSeconds : timerSeconds}`}
+      <div style={{textAlign: 'center'}}>
+        <div className="timer-container">
+          <div className="timer-active" style={{backgroundImage: `linear-gradient(${timerDegrees}deg, #7ED321 0%, transparent 100%)`}}>
+            <div className="timer-circle">
+              <div className="timer-text">
+                {`${timerMinutes < 10 ? "0" + timerMinutes : timerMinutes}:${timerSeconds < 10 ? "0" + timerSeconds : timerSeconds}`}
+              </div>
+              {this.renderButton()}
             </div>
-            {this.renderButton()}
           </div>
-        </div> 
+      </div>
+      <ResetButton resetTimer={() => this.resetTimer()}/>
      </div>
     );
   }

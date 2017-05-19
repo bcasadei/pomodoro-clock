@@ -1,8 +1,8 @@
 import React from 'react';
 
-const ResetButton = () => {
+const ResetButton = ({ resetTimer }) => {
   return (
-    <button className="reset-button">
+    <button className="reset-button" onClick={resetTimer}>
       Reset
     </button>
   );

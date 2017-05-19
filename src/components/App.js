@@ -4,7 +4,6 @@ import Header from './Header';
 import TimeAdjuster from './TimeAdjuster';
 import Timer from './Timer';
 import Rounds from './Rounds';
-import ResetButton from './ResetButton';
 
 class App extends Component {
   constructor(props) {
@@ -41,6 +40,24 @@ class App extends Component {
 
     this.setState({ currentRound: currentRound + 1 });
   }
+
+  toggleHeader() {
+    switch(this.state.headerText) {
+      case 'Focus Time':
+        this.setState({ headerText: 'Break Time' });
+        break;
+      default:
+        this.setState({ headerText: 'Focus Time' });
+        break;
+    }
+  }
+
+  reset() {
+    this.setState({
+      headerText: 'Focus Time',
+      currentRound: 1
+    });
+  }
   
   render() {
     const { 
@@ -52,7 +69,9 @@ class App extends Component {
 
     return (
       <div className="container">
-        <Header headerText={this.state.headerText}/>
+        <Header>
+          {this.state.headerText}
+        </Header>
 
         <div className="row">
           <TimeAdjuster 
@@ -77,11 +96,12 @@ class App extends Component {
           shortBreakLength={shortBreakLength}
           longBreakLength={longBreakLength}
           currentRound={currentRound}
-          increaseCurrentRound={() => this.increaseCurrentRound()} />
+          increaseCurrentRound={() => this.increaseCurrentRound()}
+          toggleHeader={() => this.toggleHeader()}
+          reset={() => this.reset()}
+        />
 
         <Rounds currentRound={currentRound}/>
-
-        <ResetButton />
       </div>
     );
   }

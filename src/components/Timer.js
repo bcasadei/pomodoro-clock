@@ -49,8 +49,8 @@ class Timer extends Component {
 
     this.setState({
       currentTimer: 'round',
-      // timerMinutes: this.props.roundLength,
-      // timerSeconds: 0,
+      timerMinutes: this.props.roundLength,
+      timerSeconds: 0,
       timerDegrees: 0,
     });
   }

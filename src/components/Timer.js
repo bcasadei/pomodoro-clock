@@ -35,25 +35,24 @@ class Timer extends Component {
     }
   }
 
-  resetTimer() {
-    this.pauseTimer();
-    this.props.reset();
-
-    this.setState({
-      timerMinutes: this.props.roundLength,
-      timerSeconds: 0,
-      timerDegrees: 0,
-      paused: true,
-      currentTimer: 'round'
-    });
-  }
-
   pauseTimer() {
     this.setState({
       paused: true
     });
 
     clearInterval(this.timerID);
+  }
+
+  resetTimer() {
+    this.pauseTimer();
+    this.props.reset();
+
+    this.setState({
+      currentTimer: 'round',
+      // timerMinutes: this.props.roundLength,
+      // timerSeconds: 0,
+      timerDegrees: 0,
+    });
   }
 
   startTimer() {
@@ -136,7 +135,7 @@ class Timer extends Component {
 
     return (
       <div style={{textAlign: 'center'}}>
-        <div className="timer-container">
+        <div className={`timer-container ${this.props.isBreakTime()}`}>
           <div className="timer-active" style={{backgroundImage: `linear-gradient(${timerDegrees}deg, #7ED321 0%, transparent 100%)`}}>
             <div className="timer-circle">
               <div className="timer-text">

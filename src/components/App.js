@@ -55,8 +55,19 @@ class App extends Component {
   reset() {
     this.setState({
       headerText: 'Focus Time',
+      roundLength: 25,
+      shortBreakLength: 5,
+      longBreakLength: 25,
       currentRound: 1
     });
+  }
+
+  isBreakTime() {
+    if(this.state.headerText === 'Break Time') {
+      return 'break-time';
+    }
+
+    return;
   }
   
   render() {
@@ -68,7 +79,7 @@ class App extends Component {
     } = this.state;
 
     return (
-      <div className="container">
+      <div className={`container ${this.isBreakTime()}`}>
         <Header>
           {this.state.headerText}
         </Header>
@@ -99,6 +110,7 @@ class App extends Component {
           increaseCurrentRound={() => this.increaseCurrentRound()}
           toggleHeader={() => this.toggleHeader()}
           reset={() => this.reset()}
+          isBreakTime={() => this.isBreakTime()}
         />
 
         <Rounds currentRound={currentRound}/>
